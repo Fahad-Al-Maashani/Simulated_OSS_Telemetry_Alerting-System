@@ -1,0 +1,14 @@
+# Grafana Datasource Provisioning Configuration
+# This file uses Grafana's provisioning API format
+# Documentation: https://grafana.com/docs/grafana/latest/administration/provisioning/
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+    editable: true
+    jsonData:
+      timeInterval: 2s

@@ -1,0 +1,45 @@
+groups:
+  - name: telemetry_alerts
+    interval: 10s
+    rules:
+      - alert: HighCPUUsage
+        expr: device_cpu_usage > 80
+        for: 1m
+        labels:
+          severity: warning
+          alert_type: cpu
+        annotations:
+          summary: "High CPU usage detected on {{ $labels.device }}"
+          description: "Device {{ $labels.device }} has CPU usage of {{ $value }}% (threshold: 80%)"
+          device: "{{ $labels.device }}"
+          metric: "cpu_usage"
+          threshold: "80"
+          current_value: "{{ $value }}"
+
+      - alert: HighLatency
+        expr: device_latency_ms > 300
+        for: 1m
+        labels:
+          severity: warning
+          alert_type: latency
+        annotations:
+          summary: "High latency detected on {{ $labels.device }}"
+          description: "Device {{ $labels.device }} has latency of {{ $value }}ms (threshold: 300ms)"
+          device: "{{ $labels.device }}"
+          metric: "latency_ms"
+          threshold: "300"
+          current_value: "{{ $value }}"
+
+      - alert: HighPacketLoss
+        expr: device_packet_loss > 5
+        for: 1m
+        labels:
+          severity: warning
+          alert_type: packet_loss
+        annotations:
+          summary: "High packet loss detected on {{ $labels.device }}"
+          description: "Device {{ $labels.device }} has packet loss of {{ $value }}% (threshold: 5%)"
+          device: "{{ $labels.device }}"
+          metric: "packet_loss"
+          threshold: "5"
+          current_value: "{{ $value }}"

@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+  external_labels:
+    monitor: 'telemetry-monitor'
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['alertmanager:9093']
+
+rule_files:
+  - '/etc/prometheus/alert_rules.yml'
+
+scrape_configs:
+  - job_name: 'telemetry-api'
+    scrape_interval: 2s
+    static_configs:
+      - targets: ['telemetry-api:8000']
+        labels:
+          service: 'telemetry-api'
+          environment: 'docker'
+    metrics_path: '/metrics'
